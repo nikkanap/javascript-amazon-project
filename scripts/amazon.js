@@ -41,7 +41,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -56,9 +56,11 @@ products.forEach((product) => {
 
 document.querySelector('.products-grid').innerHTML = productsHTML;
 
+let timeout = 0;
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     button.addEventListener('click', () => {
-        const productId = button.dataset.productId;
+      clearTimeout(timeout);
+        const  { productId } = button.dataset;
         
         let matchingItem;
         cart.forEach((item) => {
@@ -67,12 +69,13 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
             } 
         });
 
+        const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
         if(matchingItem){
-            matchingItem.quantity += 1;
+            matchingItem.quantity += quantity;
         } else {
             cart.push({
-                productId: productId,
-                quantity: Number(document.querySelector(`.js-quantity-selector-${productId}`).value)
+                productId,
+                quantity
             });
         }
 
@@ -81,6 +84,12 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
             cartQuantity += item.quantity;
         });
         document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+
+        const addedToCart = document.querySelector(`.js-added-to-cart-${productId}`);
+        addedToCart.classList.add('opacity-one');
+        timeout = setTimeout(() => {
+          addedToCart.classList.remove('opacity-one');
+        }, 2000);
     });
 });
 

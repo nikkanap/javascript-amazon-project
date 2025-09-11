@@ -656,5 +656,35 @@ const products = [
       "apparel",
       "mens"
     ]
+  },
+  {
+    id: "id-1",
+    image: "images/products/backpack.jpg",
+    name: "Heavy-Duty Backpack",
+    rating: {
+      stars: 4.5,
+      count: 210
+    },
+    priceCents: 2400,
+    keywords: [
+      "backpack",
+      "carry",
+      "bag"
+    ]
+  },
+  {
+    id: "id-1",
+    image: "images/products/umbrella.jpg",
+    name: "Full-Size Umbrella",
+    rating: {
+      stars: 4,
+      count: 38
+    },
+    priceCents: 1578,
+    keywords: [
+      "umbrella",
+      "rain cover",
+      "rain"
+    ]
   }
 ];
