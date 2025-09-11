@@ -1,4 +1,5 @@
-export let cart = [
+export let cart = JSON.parse(localStorage.getItem('cart')) || 
+[
     {
         productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
         quantity: 2,
@@ -26,6 +27,8 @@ export function addToCart(productId) {
             quantity
         });
     }
+
+    saveToStorage();
 }
 
 export function removeFromCart(productId) {
@@ -37,4 +40,10 @@ export function removeFromCart(productId) {
     });
 
     cart = newCart;
+
+    saveToStorage();
+}
+
+function saveToStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
