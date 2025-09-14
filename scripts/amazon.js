@@ -2,11 +2,12 @@
 //import * as cartModule from '../data/cart.js';
 // cartModule.cart
 // cartModule.addToCart('id');
-import { cart, addToCart } from '../data/cart.js';
+import { cart, addToCart, calculateCartQuantity } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
-//const cart = [];
+//const cart = []
+updateCartQuantity();
 
 let productsHTML = '';
 products.forEach((product) => {
@@ -65,13 +66,12 @@ products.forEach((product) => {
 
 document.querySelector('.products-grid').innerHTML = productsHTML;
 
-function updateCartQuantity(productId) {
-  let cartQuantity = 0;
-  cart.forEach((cartItem) => {
-      cartQuantity += cartItem.quantity;
-  });
+function updateCartQuantity() {
+  let cartQuantity = calculateCartQuantity();
   document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
 
+function displayAdded(productId) {
   const addedToCart = document.querySelector(`.js-added-to-cart-${productId}`);
   addedToCart.classList.add('opacity-one');
   timeout = setTimeout(() => {
@@ -85,7 +85,8 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
       clearTimeout(timeout);
         const { productId } = button.dataset;
         addToCart(productId);
-        updateCartQuantity(productId);
+        updateCartQuantity();
+        displayAdded(productId)
     });
 });
 
